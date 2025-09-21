@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useBodyClass from '../hooks/useBodyClass';
 import '../css/PokemonPage.css';
 
-// I have updated the entire file to reflect a new, more professional style.
 // This is done by adding more details about the pokemons and making a better view for the user
 
 function PokemonPage() {
