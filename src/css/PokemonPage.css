@@ -1,0 +1,158 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Press+Start+2P&display=swap');
+
+body.pokemon-page-bg {
+    background-color: #f0f2f5;
+    transition: background-color 0.3s ease;
+}
+
+.pokemon-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    width: 2000px;
+}
+
+.page-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    width: 400%;
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.left-panel, .right-panel {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-panel {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    border-bottom: 5px solid #34495e;
+}
+
+.right-panel {
+    background-color: #ffffff;
+    border-left: 5px solid #bdc3c7;
+}
+
+.pokemon-number {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.pokemon-picture-container {
+    padding: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pokemon-picture {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.pokemon-name-left {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.info-box {
+    background-color: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.25rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #bdc3c7;
+    padding-bottom: 0.5rem;
+}
+
+.info-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555555;
+    margin: 0.5rem 0;
+}
+
+.type-icons, .moves-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.type-text {
+    background-color: #d1d5db;
+    color: #1f2937;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.move-item {
+    background-color: #e5e7eb;
+    color: #4b5563;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+.loading-state, .error-state, .no-data-state {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #d35400;
+    margin-top: 5rem;
+}
+
+@media (min-width: 768px) {
+    .page-content-wrapper {
+        flex-direction: row;
+    }
+    .left-panel {
+        width: 40%;
+        border-right: 5px solid #34495e;
+        border-bottom: none;
+    }
+    .right-panel {
+        width: 60%;
+        border-left: none;
+    }
+}
