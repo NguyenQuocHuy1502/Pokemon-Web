@@ -88,7 +88,7 @@ function PokemonPage() {
     if (loading) return <div className="loading-state">Loading...</div>;
     if (error) return <div className="error-state">Error: {error}</div>;
     if (!pokemonData || !pokemonImage) return <div className="no-data-state">No data found.</div>;
-    
+
     // Helper functions to parse string data
     const getTypes = () => {
         if (!pokemonData.type) return [];
@@ -104,12 +104,12 @@ function PokemonPage() {
         if (!pokemonData.fast_moves) return [];
         return pokemonData.fast_moves.replace(/[['"\]]/g, '').split(',').map(s => s.trim()).filter(s => s);
     };
-    
+
     // Render the component
     return (
         <div className="pokemon-page-container">
             <button onClick={handleBackClick} className="back-button">
-                &lt; Back to Search
+                Back 
             </button>
             <div className="page-content-wrapper">
                 <div className="left-panel">
@@ -118,15 +118,15 @@ function PokemonPage() {
                         <img src={pokemonImage} alt={pokemonData.pokemon_name} className="pokemon-picture" />
                     </div>
                     <h1 className="pokemon-name-left">{pokemonData.pokemon_name.toUpperCase()}</h1>
-                    <div className="flex justify-center items-center mt-8 space-x-4">
+                    <div className="nav-buttons">
                         {prevPokemon && (
-                            <a href={`/pokemon/${prevPokemon.pokemon_name.toLowerCase()}`} className="px-4 py-2 bg-gray-700 text-white font-semibold rounded-full hover:bg-gray-600 transition-colors">
-                                &lt; {prevPokemon.pokemon_name}
+                            <a href={`/pokemon/${prevPokemon.pokemon_name.toLowerCase()}`} className="nav-button nav-button--prev">
+                                 {prevPokemon.pokemon_name}
                             </a>
                         )}
                         {nextPokemon && (
-                            <a href={`/pokemon/${nextPokemon.pokemon_name.toLowerCase()}`} className="px-4 py-2 bg-gray-700 text-white font-semibold rounded-full hover:bg-gray-600 transition-colors">
-                                {nextPokemon.pokemon_name} &gt;
+                            <a href={`/pokemon/${nextPokemon.pokemon_name.toLowerCase()}`} className="nav-button nav-button--next">
+                                {nextPokemon.pokemon_name}
                             </a>
                         )}
                     </div>
@@ -139,7 +139,7 @@ function PokemonPage() {
                             <p className="info-text">Defense: {pokemonData.base_defense}</p>
                             <p className="info-text">Stamina: {pokemonData.base_stamina}</p>
                         </div>
-                        
+
                         <div className="info-box">
                             <h3 className="info-title">Moves</h3>
                             <div className="flex flex-col space-y-4">
@@ -169,7 +169,7 @@ function PokemonPage() {
                             <p className="info-text">Walk Distance: {pokemonData.distance} km</p>
                             <p className="info-text">Max CP: {pokemonData.max_cp}</p>
                         </div>
-                        
+
                         <div className="info-box">
                             <h3 className="info-title">Type</h3>
                             <div className="type-icons">
