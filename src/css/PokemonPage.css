@@ -12,14 +12,14 @@ body.pokemon-page-bg {
     align-items: center;
     min-height: 100vh;
     padding: 2rem;
-    width: 2000px;
+    width: 1800px;
 }
 
 .page-content-wrapper {
     display: flex;
     flex-direction: column;
-    height: 80%;
-    width: 400%;
+    
+    width: 100%;
     background-color: #ffffff;
     border-radius: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -155,4 +155,71 @@ body.pokemon-page-bg {
         width: 60%;
         border-left: none;
     }
+}
+
+.back-button {
+    /* Use fixed positioning to keep the button in the top-left corner even when scrolling */
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    padding: 0.75rem 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: #4a5568;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure the button is on top of other content */
+}
+
+.back-button:hover {
+    background-color: #2d3748;
+    transform: translateY(-2px);
+}
+
+/* Prev/Next navigation buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background-color: #1f2937; /* gray-800 */
+    color: #ffffff;
+    border-radius: 9999px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #374151; /* gray-700 */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button--prev::before {
+    content: '\003C'; /* < */
+    font-weight: 900;
+}
+
+.nav-button--next::after {
+    content: '\003E'; /* > */
+    font-weight: 900;
 }
