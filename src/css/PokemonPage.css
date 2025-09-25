@@ -69,6 +69,35 @@ body.pokemon-page-bg {
     animation: bounce 2s infinite;
 }
 
+.pokemon-placeholder {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #ecf0f1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.placeholder-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    color: #ecf0f1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+.placeholder-id {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 @keyframes bounce {
     0%, 100% {
         transform: translateY(0);
@@ -84,6 +113,141 @@ body.pokemon-page-bg {
     letter-spacing: 3px;
     color: #ffd700;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+/* Pokemon Type Badges under name */
+.pokemon-types-under-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.type-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.type-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    pointer-events: none;
+}
+
+.type-text-badge {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+/* Official Pokemon Type Colors */
+.type-badge.grass {
+    background: linear-gradient(135deg, #7AC74C, #5A9B3A);
+    box-shadow: 0 0 20px rgba(122, 199, 76, 0.4);
+}
+
+.type-badge.poison {
+    background: linear-gradient(135deg, #A33EA1, #7D2B7A);
+    box-shadow: 0 0 20px rgba(163, 62, 161, 0.4);
+}
+
+.type-badge.fire {
+    background: linear-gradient(135deg, #EE8130, #D4691A);
+    box-shadow: 0 0 20px rgba(238, 129, 48, 0.4);
+}
+
+.type-badge.flying {
+    background: linear-gradient(135deg, #A98FF3, #8B6FE0);
+    box-shadow: 0 0 20px rgba(169, 143, 243, 0.4);
+}
+
+.type-badge.water {
+    background: linear-gradient(135deg, #6390F0, #4A6FD1);
+    box-shadow: 0 0 20px rgba(99, 144, 240, 0.4);
+}
+
+.type-badge.bug {
+    background: linear-gradient(135deg, #A6B91A, #8B9A15);
+    box-shadow: 0 0 20px rgba(166, 185, 26, 0.4);
+}
+
+.type-badge.normal {
+    background: linear-gradient(135deg, #A8A77A, #8B8A5F);
+    box-shadow: 0 0 20px rgba(168, 167, 122, 0.4);
+}
+
+.type-badge.dark {
+    background: linear-gradient(135deg, #705746, #5A4538);
+    box-shadow: 0 0 20px rgba(112, 87, 70, 0.4);
+}
+
+.type-badge.electric {
+    background: linear-gradient(135deg, #F7D02C, #E6BA0A);
+    box-shadow: 0 0 20px rgba(247, 208, 44, 0.4);
+}
+
+.type-badge.psychic {
+    background: linear-gradient(135deg, #F95587, #E6396B);
+    box-shadow: 0 0 20px rgba(249, 85, 135, 0.4);
+}
+
+.type-badge.ice {
+    background: linear-gradient(135deg, #96D9D6, #7BC4C1);
+    box-shadow: 0 0 20px rgba(150, 217, 214, 0.4);
+}
+
+.type-badge.dragon {
+    background: linear-gradient(135deg, #6F35FC, #5A2BE6);
+    box-shadow: 0 0 20px rgba(111, 53, 252, 0.4);
+}
+
+.type-badge.fairy {
+    background: linear-gradient(135deg, #D685AD, #C06A95);
+    box-shadow: 0 0 20px rgba(214, 133, 173, 0.4);
+}
+
+.type-badge.fighting {
+    background: linear-gradient(135deg, #C22E28, #A02520);
+    box-shadow: 0 0 20px rgba(194, 46, 40, 0.4);
+}
+
+.type-badge.rock {
+    background: linear-gradient(135deg, #B6A136, #9A8729);
+    box-shadow: 0 0 20px rgba(182, 161, 54, 0.4);
+}
+
+.type-badge.ghost {
+    background: linear-gradient(135deg, #735797, #5E4779);
+    box-shadow: 0 0 20px rgba(115, 87, 151, 0.4);
+}
+
+.type-badge.ground {
+    background: linear-gradient(135deg, #E2BF65, #D4A952);
+    box-shadow: 0 0 20px rgba(226, 191, 101, 0.4);
+}
+
+.type-badge.steel {
+    background: linear-gradient(135deg, #B7B7CE, #A0A0B8);
+    box-shadow: 0 0 20px rgba(183, 183, 206, 0.4);
 }
 
 .info-box {
@@ -185,7 +349,7 @@ body.pokemon-page-bg {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 4rem;
     margin-top: 1.5rem;
 }
 

@@ -20,6 +20,63 @@ function PokemonPage() {
     const handleBackClick = () => {
         navigate('/');
     };
+
+    // Improved Pokemon image fetching with multiple fallback strategies
+    const fetchPokemonImage = async (pokemonName) => {
+        const imageUrls = [
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName}`,
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName}-normal`, // For Deoxys normal form
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName}-attack`, // For Deoxys attack form
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName}-defense`, // For Deoxys defense form
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName}-speed`, // For Deoxys speed form
+        ];
+
+        // Special handling for known problematic Pokemon
+        const specialCases = {
+            'deoxys': 'https://pokeapi.co/api/v2/pokemon/deoxys-normal',
+            'deoxys-attack': 'https://pokeapi.co/api/v2/pokemon/deoxys-attack',
+            'deoxys-defense': 'https://pokeapi.co/api/v2/pokemon/deoxys-defense',
+            'deoxys-speed': 'https://pokeapi.co/api/v2/pokemon/deoxys-speed',
+            'giratina': 'https://pokeapi.co/api/v2/pokemon/giratina-altered',
+            'giratina-origin': 'https://pokeapi.co/api/v2/pokemon/giratina-origin',
+            'shaymin': 'https://pokeapi.co/api/v2/pokemon/shaymin-land',
+            'shaymin-sky': 'https://pokeapi.co/api/v2/pokemon/shaymin-sky',
+            'basculin': 'https://pokeapi.co/api/v2/pokemon/basculin-red-striped',
+            'darmanitan': 'https://pokeapi.co/api/v2/pokemon/darmanitan-standard',
+            'tornadus': 'https://pokeapi.co/api/v2/pokemon/tornadus-incarnate',
+            'thundurus': 'https://pokeapi.co/api/v2/pokemon/thundurus-incarnate',
+            'landorus': 'https://pokeapi.co/api/v2/pokemon/landorus-incarnate',
+        };
+
+        // Check if this is a special case first
+        if (specialCases[pokemonName]) {
+            imageUrls.unshift(specialCases[pokemonName]);
+        }
+
+        for (const url of imageUrls) {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    const artwork = data.sprites?.other?.['official-artwork']?.front_default ||
+                                  data.sprites?.front_default ||
+                                  data.sprites?.other?.home?.front_default;
+                    
+                    if (artwork) {
+                        setPokemonImage(artwork);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log(`Failed to fetch from ${url}:`, error.message);
+                continue;
+            }
+        }
+
+        // If all API calls fail, try using PokemonDB as a fallback
+        const pokemonDbUrl = `https://img.pokemondb.net/artwork/${pokemonName}.jpg`;
+        setPokemonImage(pokemonDbUrl);
+    };
     useEffect(() => {
         const fetchAllPokemon = async () => {
             try {
@@ -64,14 +121,8 @@ function PokemonPage() {
                 const localData = await localRes.json();
                 setPokemonData(localData);
 
-                // Fetch the image from the external API, which expects lowercase names
-                const imageRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
-                if (!imageRes.ok) {
-                    throw new Error('Image not found!');
-                }
-                const imageData = await imageRes.json();
-                const officialArtwork = imageData.sprites.other['official-artwork'].front_default;
-                setPokemonImage(officialArtwork);
+                // Fetch the image from the external API with multiple fallback strategies
+                await fetchPokemonImage(pokemonName.toLowerCase());
 
             } catch (err) {
                 setError(err.message);
@@ -87,7 +138,7 @@ function PokemonPage() {
 
     if (loading) return <div className="loading-state">Loading...</div>;
     if (error) return <div className="error-state">Error: {error}</div>;
-    if (!pokemonData || !pokemonImage) return <div className="no-data-state">No data found.</div>;
+    if (!pokemonData) return <div className="no-data-state">No data found.</div>;
 
     // Helper functions to parse string data
     const getTypes = () => {
@@ -115,18 +166,43 @@ function PokemonPage() {
                 <div className="left-panel">
                     <h2 className="pokemon-number">#{pokemonData.pokemon_id}</h2>
                     <div className="pokemon-picture-container">
-                        <img src={pokemonImage} alt={pokemonData.pokemon_name} className="pokemon-picture" />
+                        {pokemonImage ? (
+                            <img 
+                                src={pokemonImage} 
+                                alt={pokemonData.pokemon_name} 
+                                className="pokemon-picture"
+                                onError={(e) => {
+                                    // Final fallback - show a placeholder
+                                    e.target.src = 'https://via.placeholder.com/300x300/2c3e50/ecf0f1?text=POKEMON';
+                                }}
+                            />
+                        ) : (
+                            <div className="pokemon-placeholder">
+                                <div className="placeholder-text">POKEMON</div>
+                                <div className="placeholder-id">#{pokemonData.pokemon_id}</div>
+                            </div>
+                        )}
                     </div>
                     <h1 className="pokemon-name-left">{pokemonData.pokemon_name.toUpperCase()}</h1>
+                    
+                    {/* Pokemon Type Images */}
+                    <div className="pokemon-types-under-name">
+                        {getTypes().map((type, index) => (
+                            <div key={index} className={`type-badge ${type.toLowerCase()}`}>
+                                <span className="type-text-badge">{type}</span>
+                            </div>
+                        ))}
+                    </div>
+                    
                     <div className="nav-buttons">
                         {prevPokemon && (
                             <a href={`/pokemon/${prevPokemon.pokemon_name.toLowerCase()}`} className="nav-button nav-button--prev">
-                                 {prevPokemon.pokemon_name}
+                                 {prevPokemon.pokemon_name.toUpperCase()}
                             </a>
                         )}
                         {nextPokemon && (
                             <a href={`/pokemon/${nextPokemon.pokemon_name.toLowerCase()}`} className="nav-button nav-button--next">
-                                {nextPokemon.pokemon_name}
+                                {nextPokemon.pokemon_name.toUpperCase()}
                             </a>
                         )}
                     </div>
@@ -168,15 +244,6 @@ function PokemonPage() {
                             <p className="info-text">Candy Required: {pokemonData.candy_required || 'N/A'}</p>
                             <p className="info-text">Walk Distance: {pokemonData.distance} km</p>
                             <p className="info-text">Max CP: {pokemonData.max_cp}</p>
-                        </div>
-
-                        <div className="info-box">
-                            <h3 className="info-title">Type</h3>
-                            <div className="type-icons">
-                                {getTypes().map((type, index) => (
-                                    <span key={index} className="type-text">{type}</span>
-                                ))}
-                            </div>
                         </div>
                     </div>
                 </div>
